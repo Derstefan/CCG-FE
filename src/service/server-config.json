@@ -1,0 +1,4 @@
+{
+    "host": "http://localhost:8080",
+    "hostfe": "http://localhost:3000"
+}
