@@ -31,6 +31,10 @@ class MainService {
         return axios.get(MAIN_API_BASE_URL + "/randomDraw/")
     }
 
+    endTurn() {
+        return axios.get(MAIN_API_BASE_URL + "/endTurn/")
+    }
+
     draw(cardId:string,x:number,y:number) {
         return axios.get(MAIN_API_BASE_URL + "/draw/"+cardId + "/" + x + "/"+y);
     }

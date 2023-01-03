@@ -5,7 +5,6 @@ import MapView from './Map/MapView';
 import HandView from './Hand/HandView';
 import Card from '../interfaces/Card';
 import Pos from '../interfaces/Pos';
-import { Button } from '@mui/material';
 
 interface GameProps {
 
@@ -13,7 +12,8 @@ interface GameProps {
 
 interface GameState {
     gameDataDTO?:GameDataDTO;
-    selectedCard?:Card
+    selectedCard?:Card;
+    mousePos?:Pos;
 }
 
 class Game extends Component<GameProps, GameState>  {
@@ -22,10 +22,11 @@ class Game extends Component<GameProps, GameState>  {
         super(props);
         this.state={
             gameDataDTO:undefined,
-            selectedCard:undefined
+            selectedCard:undefined,
         };
 
         this.randomDraw = this.randomDraw.bind(this);
+        this.endTurn = this.endTurn.bind(this);
         this.handleCardSelect = this.handleCardSelect.bind(this);
         this.handlePlaceCard = this.handlePlaceCard.bind(this);
         this.newGame = this.newGame.bind(this);
@@ -52,26 +53,39 @@ class Game extends Component<GameProps, GameState>  {
         });
     }
 
+    endTurn(){
+        mainService.endTurn().then((res) => {
+            this.updateGameData();
+        });
+    }
+
     handleCardSelect(card:Card){
-        const {gameDataDTO} = this.state;
-        if(gameDataDTO?.hand.cards.includes(card)){
+        const {gameDataDTO,selectedCard} = this.state;
+        if(selectedCard?.cardId===card.cardId){
+            this.setState({selectedCard:undefined});
+        } else if(gameDataDTO?.hand.cards.includes(card)){
             this.setState({selectedCard:card});
         }
     }
 
     handlePlaceCard(pos:Pos){
         const {selectedCard} = this.state;
-        console.log(pos);
+       // console.log(pos);
         if(selectedCard){
-            mainService.draw(selectedCard.cardId,pos.x,pos.y).then((res) => {
+            const cardW = selectedCard.operation.length;
+            const cardH = selectedCard.operation[0].length;
+            const mx=pos.x-Math.round(cardW/2-0.01);
+            const my=pos.y-Math.round(cardH/2-0.01);   
+
+
+            mainService.draw(selectedCard.cardId,mx,my).then((res) => {
+                this.setState({selectedCard:undefined});
                 this.updateGameData();
             });
         }
     }
 
-    mouseOn(pos:Pos){
 
-    }
 
     newGame(){
         mainService.newGame().then((res) => {
@@ -86,9 +100,10 @@ class Game extends Component<GameProps, GameState>  {
             return (
                 <div style={{alignItems: "center"}}>
                 <button onClick={this.newGame}>new Game</button>
-                <MapView mouseOn={this.mouseOn} handlePlaceCard={this.handlePlaceCard}  map={gameDataDTO.map} ></MapView>
-                <div>{gameDataDTO.turn.name}{"s Turn"}</div>
+                <MapView handlePlaceCard={this.handlePlaceCard} map={gameDataDTO.map} selectedCard={selectedCard} ></MapView>
+                <div>{gameDataDTO.turn.name}{" Turn"}</div>
                 <HandView handleCardSelect={this.handleCardSelect} selectedCard={selectedCard} hand={gameDataDTO.hand}></HandView>
+                <button onClick={this.endTurn}>endTurn</button>
                 <button onClick={this.randomDraw}>random draw</button>
             </div>);
         }

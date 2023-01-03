@@ -1,3 +1,5 @@
+import Element from "./Element";
+
 interface Card{
     cardId:string;
     operation:Element[][];

@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import Cell from '../../interfaces/Cell';
+import EType from '../../interfaces/EType';
 import Pos from '../../interfaces/Pos';
 
 
 interface CellViewProps {
     cell: Cell;
+
+    eType?:EType
     handlePlaceCard:(pos:Pos)=>void
     mouseOn:(pos:Pos)=>void
+    showFocus:boolean
 }
 
 
@@ -15,43 +19,47 @@ function CellView(props:CellViewProps){
 
     const handleMouseEnter = () => {
        setIsHover(true);
-       //send info to Mapview
        props.mouseOn(props.cell.pos);
     };
     const handleMouseLeave = () => {
        setIsHover(false);
     };
-    
+
     var style = {
         margin:10,
         fontWeight: isHover? 'bold' : 'normal',
+        fontSize:"8px",
         backgroundColor:"gray",
+        opacity:(props.showFocus)?0.4:1.0,
         border: "1px solid",
-        width: "1.5em",
-        height: "1.5em",
+        width: "1em",
+        height: "1em",
         cursor: "pointer"
     }
     if(props.cell){
 
-    if(props.cell.element===null || props.cell.element===undefined){
-        
-        return (
-            <td onClick={()=>props.handlePlaceCard(props.cell.pos)} 
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={style}>
-                {"-"}
-            </td>
-        );
-    } 
-    if(props.cell.element.type.color!==null){
-    style.backgroundColor=props.cell.element.type.color+"";
-    }
+    
+        style.backgroundColor=props.cell.element.type.color+"";
+        var txt = props.cell.element.type.name;
+        if(props.eType!==undefined){
+            style.border= "2px solid";
+            if(props.cell.possibleChanges.filter((eType:EType)=>{return eType.name===props.eType?.name}).length>=1){
+                style.backgroundColor=props.eType.color+"";
+                style.opacity=1.0;
+                txt=props.eType.name;
+            }
+        }
     return (
         
-        <td onClick={()=>props.handlePlaceCard(props.cell.pos)}            onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave} style={style}>
-            {props.cell.element.type.name}
+        <td 
+        onClick={()=>{
+            console.log(props.cell.possibleChanges);
+        props.handlePlaceCard(props.cell.pos)
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={style}>
+        {txt}
         </td>
     );
             
