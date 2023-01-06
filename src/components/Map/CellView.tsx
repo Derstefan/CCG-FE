@@ -31,7 +31,7 @@ function CellView(props:CellViewProps){
         fontSize:"8px",
         backgroundColor:"gray",
         opacity:(props.showFocus)?0.4:1.0,
-        border: "1px solid",
+        border: "1px solid transparent",
         width: "1em",
         height: "1em",
         cursor: "pointer"
@@ -42,7 +42,7 @@ function CellView(props:CellViewProps){
         style.backgroundColor=props.cell.element.type.color+"";
         var txt = props.cell.element.type.name;
         if(props.eType!==undefined){
-            style.border= "2px solid";
+            style.border= "1px solid black";
             if(props.cell.possibleChanges.filter((eType:EType)=>{return eType.name===props.eType?.name}).length>=1){
                 style.backgroundColor=props.eType.color+"";
                 style.opacity=1.0;

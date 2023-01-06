@@ -4,6 +4,7 @@ import Element from '../../interfaces/Element';
 
 interface ElementViewProps {
     element: Element;
+    date?:number;
 }
 
 
