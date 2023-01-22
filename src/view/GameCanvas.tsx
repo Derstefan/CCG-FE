@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Stage, Text } from "react-pixi-fiber";
+import { Container, Stage, Text } from "react-pixi-fiber";
 import Chessboard from "./Chessboard";
 import RotatingBunny from "./RotatingBunny";
 
@@ -90,9 +90,11 @@ setDragStart({ x: event.clientX, y: event.clientY });
 return (
 <div onWheel={handleMouseWheel} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove}>
   <Stage options={options} style={style} x={position.x} y={position.y}>
+  <Container position={[150, 150]}>
     <Text position="350,0" text={"x=" + position.x + ",y=" + position.y + ",zoom=" + zoom} />
     <RotatingBunny position="0,50" scale={zoom} />
     <Chessboard  position="0,0" squareSize={40*zoom} scale={zoom}></Chessboard>
+    </Container>
   </Stage>
 </div>
 );

@@ -43,15 +43,15 @@ class ElementPortFolio extends Component<ElementPortFolioProps, ElementPortFolio
         if(elementPortFolio){
             return (
                 <div style={{textAlign:"center"}}>
-                    <h2>Element {elementPortFolio?.element.type.description}</h2>
-                    <Link href={'/library/elements/'+elementPortFolio?.element.type.name}>
+                    <h2>Element {elementPortFolio?.element.description}</h2>
+                    <Link href={'/library/elements/'+elementPortFolio?.element.id}>
                 <ElementView element={elementPortFolio?.element}></ElementView>
                 </Link>
                 <p>Can place over these Elements </p>
                 
                 {elementPortFolio?.canPutOverElements.map((element:Element)=>{
                     return <>
-                    <Link href={'/library/elements/'+element.type.name}>
+                    <Link href={'/library/elements/'+element.id}>
                         <ElementView element={element}></ElementView>
                     </Link>
                     {' '}
@@ -62,7 +62,7 @@ class ElementPortFolio extends Component<ElementPortFolioProps, ElementPortFolio
                 {elementPortFolio?.rules.map((rule:Rule)=>{
                     return <div style={{marginTop:"10px"}}>
                         <>over </>
-                        <Link replace={true} href={'/library/elements/'+rule.beforeElement.type.name}>
+                        <Link replace={true} href={'/library/elements/'+rule.beforeElement.id}>
                             <ElementView element={rule.beforeElement}></ElementView>
                         </Link>
                         <> if </>{rule.description}

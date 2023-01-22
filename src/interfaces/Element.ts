@@ -1,7 +1,9 @@
-import EType from "./EType";
+
 
 interface Element{
-    type:EType;
+    id:string;
+    color:string;
+    description?:string;
 }
 
 export default Element;

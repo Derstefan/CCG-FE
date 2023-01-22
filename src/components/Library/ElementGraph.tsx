@@ -48,14 +48,14 @@ class ElementGraph extends Component<ElementGraphProps, ElementGraphState>  {
         const graph = new MultiDirectedGraph();
 
         elements?.forEach((element=>{
-            graph.addNode(element.type.name,{x:Math.random(),y:Math.random(),size:15,label:element.type.name,color:element.type.color})
+            graph.addNode(element.id,{x:Math.random(),y:Math.random(),size:15,label:element.id,color:element.color})
         }))
 
         
         var index =1;
         rules?.forEach((rule=>{
             index++;
-            graph.addEdgeWithKey(index,rule.beforeElement.type.name,rule.element.type.name,{label:"SEES",color:"#111111"})
+            graph.addEdgeWithKey(index,rule.beforeElement.id,rule.element.id,{label:"SEES",color:"#111111"})
         }))
 
 

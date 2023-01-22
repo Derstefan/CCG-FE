@@ -47,7 +47,7 @@ class Library extends Component<LibraryProps, LibraryState>  {
                 <p>Elements: </p>
                 {elements?.map((element:Element)=>{
                     return <>
-                    <Link href={'/library/elements/'+element.type.name}>
+                    <Link href={'/library/elements/'+element.id}>
                         <ElementView element={element}></ElementView>
                     </Link>
                     {' '}
@@ -57,11 +57,11 @@ class Library extends Component<LibraryProps, LibraryState>  {
                 <p>Rules: </p>
                 {rules?.map((rule:Rule)=>{
                     return <div style={{marginTop:"10px"}}>
-                    <Link href={'/library/elements/'+rule.element.type.name}>
+                    <Link href={'/library/elements/'+rule.element.id}>
                         <ElementView element={rule.element}></ElementView>
                     </Link>
                     <> can placed over </>
-                    <Link href={'/library/elements/'+rule.beforeElement.type.name}>
+                    <Link href={'/library/elements/'+rule.beforeElement.id}>
                         <ElementView element={rule.beforeElement} ></ElementView>
                     </Link>
                     <> if </>{rule.description}

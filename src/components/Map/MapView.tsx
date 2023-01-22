@@ -48,8 +48,8 @@ function MapView(props:MapViewProps){
                         const my=mousePos.y-Math.round(cardH/2-0.01);
 
                         if(mx<=i && my<=j && mx+cardW>i && my+cardH>j){
-                            const eType=props.selectedCard.operation[i-mx][j-my]?.type;
-                            return <CellView mouseOn={setMousePos} handlePlaceCard={props.handlePlaceCard} cell={cell} showFocus={true} eType={eType}></CellView>;
+                            const element =props.selectedCard.operation[i-mx][j-my];
+                            return <CellView mouseOn={setMousePos} handlePlaceCard={props.handlePlaceCard} cell={cell} showFocus={true} element={element}></CellView>;
                         }
                         return <CellView mouseOn={setMousePos} handlePlaceCard={props.handlePlaceCard} cell={cell} showFocus={true}></CellView>;
                     } else {

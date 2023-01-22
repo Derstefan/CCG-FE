@@ -29,13 +29,13 @@ function ElementView(props:ElementViewProps){
             </td>
         );
     } 
-    if(props.element.type.color!==null){
-        style.backgroundColor=props.element.type.color+"";
+    if(props.element.color!==null){
+        style.backgroundColor=props.element.color+"";
     }
     return (
 
         <td style={style}>
-            {props.element.type.name}
+            {props.element.id}
         </td>
     );
             
